@@ -1,0 +1,93 @@
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+}
+
+.user-profile__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.user-profile__name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.user-profile__email {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.user-profile__avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1rem;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.user-profile__logout {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.user-profile__logout:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.user-profile__logout:active {
+  transform: translateY(1px);
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+  .user-profile {
+    gap: 0.5rem;
+  }
+  
+  .user-profile__info {
+    display: none;
+  }
+  
+  .user-profile__avatar {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.8rem;
+  }
+  
+  .user-profile__logout {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* 超小型画面対応 */
+@media (max-width: 480px) {
+  .user-profile {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .user-profile__logout {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+  }
+}
