@@ -18,7 +18,14 @@ const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const PASSWORDS_FILE = path.join(DATA_DIR, 'passwords.json');
 
 // ミドルウェア
-app.use(cors());
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || ['http://localhost:5173', 'http://localhost:5174'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // データディレクトリの初期化
@@ -99,6 +106,16 @@ async function getPassword(email) {
 }
 
 // API エンドポイント
+
+// ヘルスチェック用エンドポイント
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development',
+    dataDir: DATA_DIR
+  });
+});
 
 // ユーザー登録
 app.post('/api/auth/register', async (req, res) => {

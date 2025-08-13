@@ -1,6 +1,7 @@
 import type { RegisterForm, LoginForm, AuthError, User } from '../types';
 
-const API_BASE_URL = 'http://localhost:3002/api';
+// 環境に応じてAPI URLを設定
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3002/api';
 
 // バリデーション関数（フロントエンド用）
 export function validateRegisterForm(form: RegisterForm): AuthError[] {
@@ -80,9 +81,19 @@ export async function registerUser(form: RegisterForm): Promise<{ success: boole
     return { success: false, errors: [{ message: '登録に失敗しました' }] };
   } catch (error) {
     console.error('Registration API error:', error);
+    
+    // より詳細なエラー情報を提供
+    let errorMessage = 'ネットワークエラーが発生しました';
+    
+    if (error instanceof TypeError && error.message.includes('fetch')) {
+      errorMessage = `サーバーに接続できません (${API_BASE_URL})`;
+    } else if (error instanceof Error) {
+      errorMessage = `通信エラー: ${error.message}`;
+    }
+    
     return {
       success: false,
-      errors: [{ message: 'ネットワークエラーが発生しました' }]
+      errors: [{ message: errorMessage }]
     };
   }
 }
